@@ -10,13 +10,13 @@ Build SQS-based applications without the boilerplate. Just define an async funct
 ## Installation
 
 ```bash
-npm install sqs-consumer --save
+npm install kobebatman-sqs-consumer --save
 ```
 
 ## Usage
 
 ```js
-const { Consumer } = require('sqs-consumer');
+const { Consumer } = require('kobebatman-sqs-consumer');
 
 const app = Consumer.create({
   queueUrl: 'https://sqs.eu-west-1.amazonaws.com/account-id/queue-name',
@@ -42,7 +42,7 @@ app.start();
 * By default messages are processed one at a time – a new message won't be received until the first one has been processed. To process messages in parallel, use the `batchSize` option [detailed below](#options).
 * By default, the default Node.js HTTP/HTTPS SQS agent creates a new TCP connection for every new request ([AWS SQS documentation](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/node-reusing-connections.html)). To avoid the cost of establishing a new connection, you can reuse an existing connection by passing a new SQS instance with `keepAlive: true`.
 ```js
-const { Consumer } = require('sqs-consumer');
+const { Consumer } = require('kobebatman-sqs-consumer');
 const AWS = require('aws-sdk');
 
 const app = Consumer.create({
@@ -83,7 +83,7 @@ If you need to specify your credentials manually, you can use a pre-configured i
 
 
 ```js
-const { Consumer } = require('sqs-consumer');
+const { Consumer } = require('kobebatman-sqs-consumer');
 const AWS = require('aws-sdk');
 
 AWS.config.update({
