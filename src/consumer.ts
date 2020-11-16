@@ -74,6 +74,7 @@ function hasMessages(response: ReceieveMessageResponse): boolean {
 }
 
 export interface ConsumerOptions {
+  isDeleteMessage?: boolean;
   queueUrl?: string;
   attributeNames?: string[];
   messageAttributeNames?: string[];
@@ -104,6 +105,7 @@ interface Events {
 }
 
 export class Consumer extends EventEmitter {
+  private isDeleteMessage: boolean;
   private queueUrl: string;
   private handleMessage: (message: SQSMessage) => Promise<void>;
   private handleMessageBatch: (message: SQSMessage[]) => Promise<void>;
@@ -123,6 +125,7 @@ export class Consumer extends EventEmitter {
   constructor(options: ConsumerOptions) {
     super();
     assertOptions(options);
+    this.isDeleteMessage = options.isDeleteMessage;
     this.queueUrl = options.queueUrl;
     this.handleMessage = options.handleMessage;
     this.handleMessageBatch = options.handleMessageBatch;
@@ -208,7 +211,9 @@ export class Consumer extends EventEmitter {
         });
       }
       await this.executeHandler(message);
-      await this.deleteMessage(message);
+      if (this.isDeleteMessage) {
+        await this.deleteMessage(message);
+      }
       this.emit('message_processed', message);
     } catch (err) {
       this.emitError(err, message);
