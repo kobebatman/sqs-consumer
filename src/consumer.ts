@@ -236,7 +236,7 @@ export class Consumer extends EventEmitter {
     }
   }
 
-  private async deleteMessage(message: SQSMessage): Promise<void> {
+  public async deleteMessage(message: SQSMessage): Promise<void> {
     debug('Deleting message %s', message.MessageId);
 
     const deleteParams = {
