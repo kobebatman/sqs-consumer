@@ -59,7 +59,7 @@ export declare class Consumer extends EventEmitter {
     private handleSqsResponse;
     private processMessage;
     private receiveMessage;
-    private deleteMessage;
+    deleteMessage(message: SQSMessage): Promise<void>;
     private executeHandler;
     private changeVisabilityTimeout;
     private emitError;
